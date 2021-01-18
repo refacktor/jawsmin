@@ -20,14 +20,14 @@ public class AWSLogsClient implements AWSLogs {
 	public PutLogEventsResult putLogEvents(PutLogEventsRequest request) {
 		HttpPost post = HttpUtils.createRequest(Constants.URL+"/?Action=PutLogEvents",
 				Constants.SERVICE + "." + Constants.REGION + "."+Constants.DOMAIN, Constants.KEY, Constants.SECRET, Constants.REGION, Constants.SERVICE,
-				"POST", Constants.URL+"/?Action=PutLogEvents");
+				"POST","/", "PutLogEvents");
 		return HttpUtils.executeRequest(post, request, PutLogEventsResult.class);
 	}
 
 	public CreateLogGroupResult createLogGroup(CreateLogGroupRequest request) {
 		HttpPost post = HttpUtils.createRequest(Constants.URL+"/?Action=CreateLogGroup",
 				Constants.SERVICE + "." + Constants.REGION +  "."+Constants.DOMAIN, Constants.KEY, Constants.SECRET, Constants.REGION, Constants.SERVICE,
-				"POST", Constants.URL+"/?Action=CreateLogGroup");
+				"POST", "/","CreateLogGroup");
 		return HttpUtils.executeRequest(post, request, CreateLogGroupResult.class);
 	}
 
@@ -35,21 +35,21 @@ public class AWSLogsClient implements AWSLogs {
 		// request = beforeClientExecution(request);
 		HttpPost post = HttpUtils.createRequest(Constants.URL+"/?Action=DescribeLogGroups",
 				Constants.SERVICE + "." + Constants.REGION +  "."+Constants.DOMAIN, Constants.KEY, Constants.SECRET, Constants.REGION, Constants.SERVICE,
-				"POST",Constants.URL+ "/?Action=DescribeLogGroups");
+				"POST","/", "DescribeLogGroups");
 		return HttpUtils.executeRequest(post, request, DescribeLogGroupsResult.class);
 	}
 
 	public CreateLogStreamResult createLogStream(CreateLogStreamRequest request) {
 		HttpPost post = HttpUtils.createRequest(Constants.URL+"/?Action=CreateLogStream",
-				Constants.SERVICE + "." + Constants.REGION +  "."+Constants.REGION, Constants.KEY, Constants.SECRET, Constants.REGION, Constants.SERVICE,
-				"POST", Constants.URL+"/?Action=CreateLogStream");
+				Constants.SERVICE + "." + Constants.REGION +  "."+Constants.DOMAIN, Constants.KEY, Constants.SECRET, Constants.REGION, Constants.SERVICE,
+				"POST", "/","CreateLogStream");
 		return HttpUtils.executeRequest(post, request, CreateLogStreamResult.class);
 	}
 
 	public DescribeLogStreamsResult describeLogStreams(DescribeLogStreamsRequest request) {
 		HttpPost post = HttpUtils.createRequest(Constants.URL+"/?Action=DescribeLogStreams",
 				Constants.SERVICE + "." + Constants.REGION +  "."+Constants.DOMAIN, Constants.KEY, Constants.SECRET, Constants.REGION, Constants.SERVICE,
-				"POST", Constants.URL+"/?Action=DescribeLogStreams");
+				"POST","/", "DescribeLogStreams");
 		return HttpUtils.executeRequest(post, request, DescribeLogStreamsResult.class);
 	}
 

@@ -20,7 +20,7 @@ public class HttpUtils {
 	
 	public static Log logger = LogFactory.getLog(HttpUtils.class);
     public static HttpPost createRequest(String url,String host,String key,String secret
-    		,String region,String service,String methode,String canonical) {
+    		,String region,String service,String methode,String canonical,String action) {
         
     	
     	
@@ -33,8 +33,8 @@ public class HttpUtils {
         awsHeaders.put("Accept", "application/json");
         awsHeaders.put("Content-Type", "application/x-amz-json-1.1");
        TreeMap<String, String> queryParam =null;
-//       queryParam = new TreeMap<String, String>();
-//        queryParam.put("Action", "CreateLogGroup");
+       queryParam = new TreeMap<String, String>();
+        queryParam.put("Action", action);
 
         AWSV4Auth aWSV4Auth = new AWSV4Auth.Builder(key, secret)
                                            .regionName(region)
@@ -48,7 +48,8 @@ public class HttpUtils {
                                            .build();
         
         /* Get header calculated for request */
-        Map<String, String> header = aWSV4Auth.getHeaders();
+        Map<String, String> header = new TreeMap<String, String>(aWSV4Auth.getHeaders());
+
         HttpPost httpPost = new HttpPost(url);
 
         for (Map.Entry<String, String> entrySet : header.entrySet()) {
@@ -80,13 +81,13 @@ public class HttpUtils {
               
              //verify the valid error code first
              int statusCode = response.getStatusLine().getStatusCode();
-           
+             String stringResult = IOUtils.toString(response.getEntity().getContent());
+
              if (statusCode != 200) 
              {
-            	 logger.error("Error Code :" + response);
+            	 logger.error("Error Code :" + stringResult);
                  throw new RuntimeException("Failed with HTTP error code : " + statusCode);
              }
-             String stringResult = IOUtils.toString(response.getEntity().getContent(), "UTF_8");
              S result = gson.fromJson(stringResult, s);
 
              return result;
