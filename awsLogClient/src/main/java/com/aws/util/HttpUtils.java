@@ -1,7 +1,11 @@
 package com.aws.util;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.TreeMap;
 
 import org.apache.commons.io.IOUtils;
@@ -19,8 +23,14 @@ import com.google.gson.Gson;
 public class HttpUtils {
 	
 	public static Log logger = LogFactory.getLog(HttpUtils.class);
+	
+	  private static String getTimeStamp() {
+	        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'");
+	        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));//server timezone
+	        return dateFormat.format(new Date());
+	    }
     public static HttpPost createRequest(String url,String host,String key,String secret
-    		,String region,String service,String methode,String canonical,String action) {
+    		,String region,String service,String methode,String canonical,String action,Object payload) {
         
     	
     	
@@ -28,13 +38,17 @@ public class HttpUtils {
          * Add host without http or https protocol.
          * You can also add other parameters based on your amazon service requirement.
          */
+    	
         TreeMap<String, String> awsHeaders = new TreeMap<String, String>();
-        awsHeaders.put("host", host);
-        awsHeaders.put("Accept", "application/json");
-        awsHeaders.put("Content-Type", "application/x-amz-json-1.1");
+        awsHeaders.put("content-type", "application/json");
+        awsHeaders.put("host", host);       
+        awsHeaders.put("x-amz-date", getTimeStamp());       
+   
        TreeMap<String, String> queryParam =null;
        queryParam = new TreeMap<String, String>();
         queryParam.put("Action", action);
+ queryParam.put("Version", "2012-10-17");
+
 
         AWSV4Auth aWSV4Auth = new AWSV4Auth.Builder(key, secret)
                                            .regionName(region)
@@ -46,7 +60,8 @@ public class HttpUtils {
                                            .payload(null) // payload if any
                                            .debug() // turn on the debug mode
                                            .build();
-        
+        aWSV4Auth.getHeaders();
+        System.out.println("######################################################################");
         /* Get header calculated for request */
         Map<String, String> header = new TreeMap<String, String>(aWSV4Auth.getHeaders());
 
@@ -87,7 +102,11 @@ public class HttpUtils {
              {
             	 logger.error("Error Code :" + stringResult);
                  throw new RuntimeException("Failed with HTTP error code : " + statusCode);
+             }else {
+            	 System.out.println("Success Call to the Action. Status 200 "+stringResult);
              }
+            
+            
              S result = gson.fromJson(stringResult, s);
 
              return result;

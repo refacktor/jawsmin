@@ -2,7 +2,7 @@ package com.aws.util;
 
 public class Constants {
 
-    public static final String REGION = "us-east-2";
+    public static final String REGION = "us-east-1";
 
     public static final String DOMAIN = "amazonaws.com";
 

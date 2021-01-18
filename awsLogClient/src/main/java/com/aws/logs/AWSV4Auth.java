@@ -14,7 +14,14 @@ import java.util.TreeMap;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-
+/**
+ * Example: Signing AWS Requests with Signature Version 4 in Java.
+ *
+ * @reference: http://docs.aws.amazon.com/general/latest/gr/sigv4_signing.html
+ * @author javaQuery
+ * @date 19th January, 2016
+ * @Github: https://github.com/javaquery/Examples
+ */
 public class AWSV4Auth {
 
     private AWSV4Auth() {
@@ -232,30 +239,38 @@ public class AWSV4Auth {
         }
         return null;
     }
-
+public static void main(String[] args) {
+	
+	String s= "03a88a13f2ed3bd936e4f5028b1c5c1747ccde561adfe6eb766fd225b3668719";
+	s.getBytes();
+}
     /**
      * Task 4: Add the Signing Information to the Request. We'll return Map of
      * all headers put this headers in your request.
      *
      * @return
      */
-    public Map<String, String> getHeaders() {
-        awsHeaders.put("x-amz-date", xAmzDate);
+    public  Map<String, String> getHeaders() {
+        //awsHeaders.put("x-amz-date", xAmzDate);
 
         /* Execute Task 1: Create a Canonical Request for Signature Version 4. */
         String canonicalURL = prepareCanonicalRequest();
 
         /* Execute Task 2: Create a String to Sign for Signature Version 4. */
         String stringToSign = prepareStringToSign(canonicalURL);
-
+System.out.println("test");
         /* Execute Task 3: Calculate the AWS Signature Version 4. */
         String signature = calculateSignature(stringToSign);
 
         if (signature != null) {
             Map<String, String> header = new HashMap<String, String>(0);
-            header.put("x-amz-date", xAmzDate);
+      
+          
             header.put("Authorization", buildAuthorizationString(signature));
 
+            header.put("content-type", awsHeaders.get("content-type"));
+            header.put("host", awsHeaders.get("host"));       
+            header.put("x-amz-date", getTimeStamp());   
             if (debug) {
                 System.out.println("##Signature:\n" + signature);
                 System.out.println("##Header:");
@@ -282,7 +297,7 @@ public class AWSV4Auth {
     private String buildAuthorizationString(String strSignature) {
         return HMACAlgorithm + " "
                 + "Credential=" + accessKeyID + "/" + getDate() + "/" + regionName + "/" + serviceName + "/" + aws4Request + ","
-                + "SignedHeaders=" + strSignedHeader + ","
+                + "SignedHeaders="+strSignedHeader+","
                 + "Signature=" + strSignature;
     }
 

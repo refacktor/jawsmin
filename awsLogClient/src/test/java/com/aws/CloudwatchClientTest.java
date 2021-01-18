@@ -2,23 +2,21 @@ package com.aws;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
-import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.logging.LoggerFactory;
+import org.junit.Test;
 
 import com.aws.logs.AWSLogsClient;
 import com.aws.model.CreateLogGroupRequest;
 
 
-class CloudwatchClientTest {
+public class CloudwatchClientTest {
 
     @Test
-    void test() {
+    public void test() {
         CreateLogGroupRequest g = new CreateLogGroupRequest();
         // g.setKmsKeyId("kms");
         g.setLogGroupName("logG1");
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<String, String>();
         map.put("test", "test");
         g.setTags(map);
         AWSLogsClient log = new AWSLogsClient();

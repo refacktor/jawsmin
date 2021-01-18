@@ -6,7 +6,9 @@ import static java.util.stream.Collectors.toList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -255,14 +257,18 @@ public class CloudwatchClient {
         sendMessages();
     }
     
-//    public static void main(String[] args) {
-//		CreateLogGroupRequest g = new CreateLogGroupRequest();
-//		g.setKmsKeyId("kms");
-//		g.setLogGroupName("logG1");
-//		Map<String,String> map = new HashMap<>();
-//		map.put("test", "test");
-//		g.setTags(map);
-//		AWSLogsClient log  = new AWSLogsClient();
-//		log.createLogGroup(g);
-//	}
+    public static void main(String[] args) {
+		CreateLogGroupRequest g = new CreateLogGroupRequest();
+		g.setKmsKeyId("kms");
+		g.setLogGroupName("logG1");
+		Map<String,String> map = new HashMap<>();
+		map.put("test", "test");
+		g.setTags(map);
+		AWSLogsClient log  = new AWSLogsClient();
+		log.createLogGroup(g);
+		CreateLogStreamRequest logStream = new CreateLogStreamRequest();
+		logStream.setLogGroupName("G1");
+		logStream.setLogStreamName("S1");
+		log.createLogStream(logStream);
+	}
 }
