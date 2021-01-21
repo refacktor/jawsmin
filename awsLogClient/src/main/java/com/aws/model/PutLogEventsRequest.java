@@ -305,7 +305,7 @@ public class PutLogEventsRequest  implements Serializable, Cloneable {
 		if(logEvents !=null) {
 			JsonArray logs= null;
 			for(InputLogEvent logEvent : logEvents) {
-				logs= Json.array().add(logEvent.toString());
+				logs= Json.array().add(Json.object().set("timestamp", logEvent.getTimestamp()).set("message", logEvent.getMessage()));
 			}
 				
 				modelJson.set("logEvents", logs);

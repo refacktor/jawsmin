@@ -1,32 +1,43 @@
 package com.aws;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.aws.logs.AWSLogsClient;
 import com.aws.model.CreateLogGroupRequest;
 import com.aws.model.CreateLogStreamRequest;
 import com.aws.model.DescribeLogStreamsRequest;
+import com.aws.model.DescribeLogStreamsResult;
+import com.aws.model.InputLogEvent;
+import com.aws.model.PutLogEventsRequest;
 
 
 public class CloudwatchClientTest {
 
     @Test
     public void test() {
-		AWSLogsClient log  = new AWSLogsClient();
-
+		final AWSLogsClient log  = new AWSLogsClient();
+		final String logGroupName = "TEST-" + Long.toHexString(System.currentTimeMillis()/1000);
+		final String logStreamName = "Stream-1";
     	
-		CreateLogStreamRequest logStream = new CreateLogStreamRequest();
-		logStream.setLogGroupName("test65");
-		logStream.setLogStreamName("S1");
-		log.createLogStream(logStream);
-		DescribeLogStreamsRequest describe = new DescribeLogStreamsRequest();
-		describe.setLogGroupName("GroupLo44");
-		
-		log.describeLogStreams(describe);
-		
 		CreateLogGroupRequest g = new CreateLogGroupRequest();
-		g.setLogGroupName("test2");
-		
+		g.setLogGroupName(logGroupName);
 		log.createLogGroup(g);
+		
+		CreateLogStreamRequest logStream = new CreateLogStreamRequest();
+		logStream.setLogGroupName(logGroupName);
+		logStream.setLogStreamName(logStreamName);
+		log.createLogStream(logStream);
+		
+		DescribeLogStreamsRequest describe = new DescribeLogStreamsRequest();
+		describe.setLogGroupName(logGroupName);
+		DescribeLogStreamsResult describeLogStreams = log.describeLogStreams(describe);
+		Assert.assertTrue(describeLogStreams.getLogStreams().size() >= 1);
+		
+		List<InputLogEvent> logEvents = Arrays.asList(new InputLogEvent().withMessage("this is a test log event").withTimestamp(System.currentTimeMillis()) );
+		log.putLogEvents(new PutLogEventsRequest(logGroupName, logStreamName, logEvents));
     }
 }
