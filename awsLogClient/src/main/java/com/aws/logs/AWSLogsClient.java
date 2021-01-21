@@ -31,10 +31,8 @@ public class AWSLogsClient implements AWSLogs {
 					new PutLogEventsResult());
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
-		return null;
 	}
 
 	public CreateLogGroupResult createLogGroup(CreateLogGroupRequest request) {
@@ -51,10 +49,8 @@ public class AWSLogsClient implements AWSLogs {
 					request, new CreateLogGroupResult());
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
-		return null;
 	}
 
 	public DescribeLogGroupsResult describeLogGroups(
@@ -74,10 +70,8 @@ public class AWSLogsClient implements AWSLogs {
 					request, new DescribeLogGroupsResult());
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
-		return null;
 	}
 
 	public CreateLogStreamResult createLogStream(
@@ -95,10 +89,8 @@ public class AWSLogsClient implements AWSLogs {
 					request, new CreateLogStreamResult());
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
-		return null;
 	}
 
 	public DescribeLogStreamsResult describeLogStreams(
@@ -117,10 +109,8 @@ public class AWSLogsClient implements AWSLogs {
 					request, new DescribeLogStreamsResult());
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
-		return null;
 	}
 
 }

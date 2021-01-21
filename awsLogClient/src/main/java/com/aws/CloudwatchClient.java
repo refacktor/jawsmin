@@ -124,7 +124,7 @@ public class CloudwatchClient {
 
 		} catch (Exception e) {
 			// should never happen
-			System.err.println("IGNORED: " + e.toString());
+			logger.info("IGNORED: " + e.toString());
 			e.printStackTrace();
 		}
 	}
@@ -153,7 +153,7 @@ public class CloudwatchClient {
 						.putLogEvents(putLogEventsRequest);
 				lastSequenceToken.set(result.getNextSequenceToken());
 			} catch (InvalidSequenceTokenException invalidSequenceTokenException) {
-				System.err.println("Resetting sequenceToken");
+				logger.info("Resetting sequenceToken");
 				putLogEventsRequest
 						.setSequenceToken(invalidSequenceTokenException
 								.getExpectedSequenceToken());
@@ -215,7 +215,7 @@ public class CloudwatchClient {
 
 	private synchronized void init(String logGroupName, String logStreamName)
 			throws IOException {
-		System.err.println("Initializing CloudwatchAppender with LogGroupName("
+		logger.info("Initializing CloudwatchAppender with LogGroupName("
 				+ logGroupName + ") and LogStreamName(" + logStreamName + ")");
 
 		// this.awsLogsClient = AWSLogsClientBuilder.standard()
