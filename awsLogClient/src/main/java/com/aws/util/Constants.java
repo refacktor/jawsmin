@@ -8,6 +8,7 @@ public class Constants {
 	public static final String SECRET = System.getenv("AWS_SECRET_ACCESS_KEY");
 	public static final String SERVICE = "logs";
 
-	public static final String URL = "https://" + SERVICE + "." + REGION + "." + DOMAIN;
+	public static final String URL = "https://" + SERVICE + "." + REGION + "."
+			+ DOMAIN;
 
 }

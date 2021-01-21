@@ -17,10 +17,13 @@ public interface AWSLogs {
 
 	public CreateLogGroupResult createLogGroup(CreateLogGroupRequest request);
 
-	public DescribeLogGroupsResult describeLogGroups(DescribeLogGroupsRequest request);
+	public DescribeLogGroupsResult describeLogGroups(
+			DescribeLogGroupsRequest request);
 
-	public CreateLogStreamResult createLogStream(CreateLogStreamRequest request);
+	public CreateLogStreamResult createLogStream(
+			CreateLogStreamRequest request);
 
-	public DescribeLogStreamsResult describeLogStreams(DescribeLogStreamsRequest request);
+	public DescribeLogStreamsResult describeLogStreams(
+			DescribeLogStreamsRequest request);
 
 }

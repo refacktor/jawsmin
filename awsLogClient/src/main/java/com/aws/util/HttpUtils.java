@@ -21,31 +21,32 @@ import com.aws.model.JsonMapperModel;
 
 public class HttpUtils {
 
-
 	private static String getTimeStamp() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'");
 		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));// server timezone
 		return dateFormat.format(new Date());
 	}
 
-	  private static String getDate() {
-	        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
-	        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));//server timezone
-	        return dateFormat.format(new Date());
-	    }
-	public static HttpURLConnection createRequest(String url, String host, String key, String secret, String region,
-			String service, String methode, String canonical, String action, Object payload) throws IOException {
+	private static String getDate() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));// server timezone
+		return dateFormat.format(new Date());
+	}
+	public static HttpURLConnection createRequest(String url, String host,
+			String key, String secret, String region, String service,
+			String methode, String canonical, String action, Object payload)
+			throws IOException {
 
 		/**
-		 * Add host without http or https protocol. You can also add other parameters
-		 * based on your amazon service requirement.
+		 * Add host without http or https protocol. You can also add other
+		 * parameters based on your amazon service requirement.
 		 */
 
-		String xAmzDate=getTimeStamp();
+		String xAmzDate = getTimeStamp();
 		System.out.println(xAmzDate);
 		TreeMap<String, String> awsHeaders = new TreeMap<String, String>();
 		awsHeaders.put("host", host);
-		awsHeaders.put("x-amz-date",xAmzDate );
+		awsHeaders.put("x-amz-date", xAmzDate);
 		awsHeaders.put("x-amz-target", "Logs_20140328." + action);
 		awsHeaders.put("content-type", "application/x-amz-json-1.1");
 
@@ -56,29 +57,32 @@ public class HttpUtils {
 
 		System.out.println(payload.toString());
 
-		AWSV4Auth aWSV4Auth = new AWSV4Auth.Builder(key, secret).regionName(region).serviceName(service) // es - elastic
-																											// search.
-																											// use your
-																											// service
-																											// name
+		AWSV4Auth aWSV4Auth = new AWSV4Auth.Builder(key, secret)
+				.regionName(region).serviceName(service) // es - elastic
+															// search.
+															// use your
+															// service
+															// name
 				.httpMethodName(methode) // GET, PUT, POST, DELETE, etc...
 				.canonicalURI(canonical) // end point
 				.date(xAmzDate)
-			
+
 				.queryParametes(queryParam) // query parameters if any
 				.awsHeaders(awsHeaders) // aws header parameters
 				.payload(payload.toString()) // payload if any
 				.debug(false) // turn on the debug mode
 				.build();
 		aWSV4Auth.getHeaders();
-		System.out.println("######################################################################");
+		System.out.println(
+				"######################################################################");
 		/* Get header calculated for request */
-		Map<String, String> header = new TreeMap<String, String>(aWSV4Auth.getHeaders());
+		Map<String, String> header = new TreeMap<String, String>(
+				aWSV4Auth.getHeaders());
 
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		con.setRequestMethod("POST");
-		
+
 		for (Map.Entry<String, String> entrySet : header.entrySet()) {
 			String headerkey = entrySet.getKey();
 			String value = entrySet.getValue();
@@ -91,28 +95,27 @@ public class HttpUtils {
 		return con;
 	}
 
-	public static <T, S extends JsonMapperModel> JsonMapperModel executeRequest(HttpURLConnection request, T user,
-			JsonMapperModel model) {
+	public static <T, S extends JsonMapperModel> JsonMapperModel executeRequest(
+			HttpURLConnection request, T user, JsonMapperModel model) {
 
 		try {
 
 			String inputString = user.toString();
 			System.out.println(inputString);
 			request.setDoOutput(true);
-		
-			try(OutputStream os = request.getOutputStream()) {
-			    byte[] input = inputString.getBytes("utf-8");
-			    os.write(input, 0, input.length);	
-			    os.flush();
+
+			try (OutputStream os = request.getOutputStream()) {
+				byte[] input = inputString.getBytes("utf-8");
+				os.write(input, 0, input.length);
+				os.flush();
 			}
-			
-			
+
 			int responseCode = request.getResponseCode();
 			System.out.println("POST Response Code :: " + responseCode);
 
-			if (responseCode == HttpURLConnection.HTTP_OK) { //success
-				BufferedReader in = new BufferedReader(new InputStreamReader(
-						request.getInputStream()));
+			if (responseCode == HttpURLConnection.HTTP_OK) { // success
+				BufferedReader in = new BufferedReader(
+						new InputStreamReader(request.getInputStream()));
 				String inputLine;
 				StringBuffer response = new StringBuffer();
 
@@ -127,8 +130,8 @@ public class HttpUtils {
 
 			} else {
 				System.out.println("POST request not worked");
-				BufferedReader in = new BufferedReader(new InputStreamReader(
-						request.getErrorStream()));
+				BufferedReader in = new BufferedReader(
+						new InputStreamReader(request.getErrorStream()));
 				String inputLine;
 				StringBuffer response = new StringBuffer();
 
@@ -136,11 +139,10 @@ public class HttpUtils {
 					response.append(inputLine);
 				}
 				in.close();
-				
-System.err.println(response.toString());
+
+				System.err.println(response.toString());
 				// print result
 			}
-		
 
 		} catch (UnsupportedOperationException e) {
 			// TODO Auto-generated catch block
@@ -154,11 +156,13 @@ System.err.println(response.toString());
 	}
 
 	@SuppressWarnings("unused")
-	private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+	private static String convertInputStreamToString(InputStream inputStream)
+			throws IOException {
 
 		String newLine = System.getProperty("line.separator");
 		String result;
-		try (Stream<String> lines = new BufferedReader(new InputStreamReader(inputStream)).lines()) {
+		try (Stream<String> lines = new BufferedReader(
+				new InputStreamReader(inputStream)).lines()) {
 			result = lines.collect(Collectors.joining(newLine));
 		}
 

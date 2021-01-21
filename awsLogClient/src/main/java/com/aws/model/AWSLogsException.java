@@ -7,16 +7,16 @@ import com.aws.exceptions.AmazonServiceException;
  */
 public class AWSLogsException extends AmazonServiceException {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Constructs a new AWSLogsException with the specified error message.
-     *
-     * @param message
-     *        Describes the error encountered.
-     */
-    public AWSLogsException(String message) {
-        super(message);
-    }
+	/**
+	 * Constructs a new AWSLogsException with the specified error message.
+	 *
+	 * @param message
+	 *            Describes the error encountered.
+	 */
+	public AWSLogsException(String message) {
+		super(message);
+	}
 
 }
