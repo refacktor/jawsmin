@@ -3,6 +3,10 @@ package com.aws.model;
 
 import java.io.Serializable;
 
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonObject;
+
+
 
 /**
  * 
@@ -12,6 +16,10 @@ import java.io.Serializable;
 public class DescribeLogStreamsRequest  implements Serializable, Cloneable {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6276612487331615521L;
+	/**
      * <p>
      * The name of the log group.
      * </p>
@@ -505,22 +513,26 @@ public class DescribeLogStreamsRequest  implements Serializable, Cloneable {
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{");
+    	JsonObject modelJson = Json.object();
+
+		
+      
         if (getLogGroupName() != null)
-            sb.append("LogGroupName: ").append(getLogGroupName()).append(",");
+			modelJson.set("logGroupName", this.logGroupName);
         if (getLogStreamNamePrefix() != null)
-            sb.append("LogStreamNamePrefix: ").append(getLogStreamNamePrefix()).append(",");
+			modelJson.set("logStreamNamePrefix", this.logStreamNamePrefix);
         if (getOrderBy() != null)
-            sb.append("OrderBy: ").append(getOrderBy()).append(",");
+			modelJson.set("orderBy", this.orderBy);
         if (getDescending() != null)
-            sb.append("Descending: ").append(getDescending()).append(",");
+			modelJson.set("descending", this.descending);
+
         if (getNextToken() != null)
-            sb.append("NextToken: ").append(getNextToken()).append(",");
+			modelJson.set("nextToken", this.nextToken);
+
         if (getLimit() != null)
-            sb.append("Limit: ").append(getLimit());
-        sb.append("}");
-        return sb.toString();
+			modelJson.set("limit", this.limit);
+
+        return modelJson.toString();
     }
 
     @Override

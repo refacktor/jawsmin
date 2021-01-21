@@ -3,8 +3,6 @@ package com.aws.model;
 
 import java.io.Serializable;
 
-import javax.annotation.processing.Generated;
-
 
 /**
  * <p>
@@ -14,7 +12,6 @@ import javax.annotation.processing.Generated;
  * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/LogGroup" target="_top">AWS API
  *      Documentation</a>
  */
-@Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class LogGroup implements Serializable, Cloneable {
 
     /**
@@ -56,7 +53,23 @@ public class LogGroup implements Serializable, Cloneable {
      */
     private String kmsKeyId;
 
-    /**
+    public LogGroup(String logGroupName, Long creationTime, Integer retentionInDays, Integer metricFilterCount,
+			String arn, Long storedBytes, String kmsKeyId) {
+		super();
+		this.logGroupName = logGroupName;
+		this.creationTime = creationTime;
+		this.retentionInDays = retentionInDays;
+		this.metricFilterCount = metricFilterCount;
+		this.arn = arn;
+		this.storedBytes = storedBytes;
+		this.kmsKeyId = kmsKeyId;
+	}
+
+	public LogGroup() {
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
      * <p>
      * The name of the log group.
      * </p>

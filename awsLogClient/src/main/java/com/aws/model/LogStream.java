@@ -2,6 +2,10 @@ package com.aws.model;
 
 import java.io.Serializable;
 
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonObject;
+
+
 /**
  * <p>
  * Represents a log stream, which is a sequence of log events from a single emitter of logs.
@@ -70,7 +74,26 @@ public class LogStream implements Serializable, Cloneable {
     @Deprecated
     private Long storedBytes;
 
-    /**
+    
+    
+    public LogStream(String logStreamName, Long creationTime, Long firstEventTimestamp, Long lastEventTimestamp,
+			Long lastIngestionTime, String uploadSequenceToken, String arn, Long storedBytes) {
+		super();
+		this.logStreamName = logStreamName;
+		this.creationTime = creationTime;
+		this.firstEventTimestamp = firstEventTimestamp;
+		this.lastEventTimestamp = lastEventTimestamp;
+		this.lastIngestionTime = lastIngestionTime;
+		this.uploadSequenceToken = uploadSequenceToken;
+		this.arn = arn;
+		this.storedBytes = storedBytes;
+	}
+
+	public LogStream() {
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
      * <p>
      * The name of the log stream.
      * </p>
@@ -445,26 +468,26 @@ public class LogStream implements Serializable, Cloneable {
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{");
+		JsonObject modelJson = Json.object();
+
         if (getLogStreamName() != null)
-            sb.append("LogStreamName: ").append(getLogStreamName()).append(",");
+        	modelJson.set("logStreamName", logStreamName);
         if (getCreationTime() != null)
-            sb.append("CreationTime: ").append(getCreationTime()).append(",");
-        if (getFirstEventTimestamp() != null)
-            sb.append("FirstEventTimestamp: ").append(getFirstEventTimestamp()).append(",");
+        	modelJson.set("creationTime", creationTime);
+		if (getFirstEventTimestamp() != null)
+        	modelJson.set("firstEventTimestamp", firstEventTimestamp);
         if (getLastEventTimestamp() != null)
-            sb.append("LastEventTimestamp: ").append(getLastEventTimestamp()).append(",");
+        	modelJson.set("lastEventTimestamp", lastEventTimestamp);
         if (getLastIngestionTime() != null)
-            sb.append("LastIngestionTime: ").append(getLastIngestionTime()).append(",");
+        	modelJson.set("lastIngestionTime", lastIngestionTime);
         if (getUploadSequenceToken() != null)
-            sb.append("UploadSequenceToken: ").append(getUploadSequenceToken()).append(",");
+        	modelJson.set("uploadSequenceToken", uploadSequenceToken);
         if (getArn() != null)
-            sb.append("Arn: ").append(getArn()).append(",");
+        	modelJson.set("arn", arn);
         if (getStoredBytes() != null)
-            sb.append("StoredBytes: ").append(getStoredBytes());
-        sb.append("}");
-        return sb.toString();
+        	modelJson.set("storedBytes", storedBytes);
+
+        return modelJson.toString();
     }
 
     @Override

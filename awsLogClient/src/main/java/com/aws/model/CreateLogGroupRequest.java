@@ -4,6 +4,11 @@ package com.aws.model;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonObject;
+
+
+
 /**
  * 
  * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/CreateLogGroup" target="_top">AWS API
@@ -13,6 +18,10 @@ import java.util.HashMap;
 public class CreateLogGroupRequest implements Serializable, Cloneable {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
      * <p>
      * The name of the log group.
      * </p>
@@ -224,16 +233,24 @@ public class CreateLogGroupRequest implements Serializable, Cloneable {
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{");
-        if (getLogGroupName() != null)
-            sb.append("LogGroupName: ").append(getLogGroupName()).append(",");
-        if (getKmsKeyId() != null)
-            sb.append("KmsKeyId: ").append(getKmsKeyId()).append(",");
-        if (getTags() != null)
-            sb.append("Tags: ").append(getTags());
-        sb.append("}");
-        return sb.toString();
+		JsonObject modelJson = Json.object();
+		if(logGroupName !=null)
+			modelJson.set("logGroupName", this.logGroupName);
+		if(kmsKeyId !=null)
+			modelJson.set("kmsKeyId", this.kmsKeyId);
+		if(tags !=null) {
+			JsonObject tgs= Json.object();
+			tags.entrySet().stream().forEach(entry -> {
+				
+				tgs.set(entry.getKey().trim(),entry.getValue());
+				
+			});
+			
+			modelJson.set("tags", tgs);
+		}
+		
+			
+		return modelJson.toString().trim();
     }
 
     @Override
@@ -276,5 +293,6 @@ public class CreateLogGroupRequest implements Serializable, Cloneable {
     public CreateLogGroupRequest clone() throws CloneNotSupportedException {
         return (CreateLogGroupRequest) super.clone();
     }
+
 
 }

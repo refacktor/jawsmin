@@ -2,7 +2,6 @@ package com.aws.model;
 
 import java.io.Serializable;
 
-import javax.annotation.processing.Generated;
 
 /**
  * <p>
@@ -12,7 +11,6 @@ import javax.annotation.processing.Generated;
  * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/RejectedLogEventsInfo" target="_top">AWS API
  *      Documentation</a>
  */
-@Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class RejectedLogEventsInfo implements Serializable, Cloneable {
 
     /**
@@ -33,8 +31,22 @@ public class RejectedLogEventsInfo implements Serializable, Cloneable {
      * </p>
      */
     private Integer expiredLogEventEndIndex;
+    
+    
 
-    /**
+    public RejectedLogEventsInfo(Integer tooNewLogEventStartIndex, Integer tooOldLogEventEndIndex,
+			Integer expiredLogEventEndIndex) {
+		super();
+		this.tooNewLogEventStartIndex = tooNewLogEventStartIndex;
+		this.tooOldLogEventEndIndex = tooOldLogEventEndIndex;
+		this.expiredLogEventEndIndex = expiredLogEventEndIndex;
+	}
+
+	public RejectedLogEventsInfo() {
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
      * <p>
      * The log events that are too new.
      * </p>

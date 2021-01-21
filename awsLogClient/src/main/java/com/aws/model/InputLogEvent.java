@@ -2,6 +2,9 @@ package com.aws.model;
 
 import java.io.Serializable;
 
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonObject;
+
 /**
  * <p>
  * Represents a log event, which is a record of activity that was recorded by the application or resource being
@@ -13,6 +16,13 @@ import java.io.Serializable;
  */
 public class InputLogEvent implements Serializable, Cloneable {
 
+	
+	
+	public InputLogEvent() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
     /**
      * <p>
      * The time the event occurred, expressed as the number of milliseconds after Jan 1, 1970 00:00:00 UTC.
@@ -116,15 +126,16 @@ public class InputLogEvent implements Serializable, Cloneable {
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{");
+		JsonObject modelJson = Json.object();
         if (getTimestamp() != null)
-            sb.append("Timestamp: ").append(getTimestamp()).append(",");
+        	modelJson.set("timestamp", this.timestamp);
         if (getMessage() != null)
-            sb.append("Message: ").append(getMessage());
-        sb.append("}");
-        return sb.toString();
+        	modelJson.set("message", this.message);
+        return modelJson.toString();
     }
+    
+
+
 
     @Override
     public boolean equals(Object obj) {

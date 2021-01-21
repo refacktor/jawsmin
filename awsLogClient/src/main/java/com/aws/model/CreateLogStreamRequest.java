@@ -3,6 +3,10 @@ package com.aws.model;
 
 import java.io.Serializable;
 
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonObject;
+
+
 
 /**
  * 
@@ -135,14 +139,14 @@ public class CreateLogStreamRequest  implements Serializable, Cloneable {
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{");
-        if (getLogGroupName() != null)
-            sb.append("LogGroupName: ").append(getLogGroupName()).append(",");
-        if (getLogStreamName() != null)
-            sb.append("LogStreamName: ").append(getLogStreamName());
-        sb.append("}");
-        return sb.toString();
+    	JsonObject modelJson = Json.object();
+		if(logGroupName !=null)
+			modelJson.set("logGroupName", this.logGroupName);
+		if(logStreamName !=null)
+			modelJson.set("logStreamName", this.logStreamName);
+			
+		return modelJson.toString();
+      
     }
 
     @Override

@@ -3,6 +3,10 @@ package com.aws.model;
 
 import java.io.Serializable;
 
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonObject;
+
+
 /**
  * 
  * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DescribeLogGroups" target="_top">AWS API
@@ -159,16 +163,17 @@ public class DescribeLogGroupsRequest  implements Serializable, Cloneable {
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{");
-        if (getLogGroupNamePrefix() != null)
-            sb.append("LogGroupNamePrefix: ").append(getLogGroupNamePrefix()).append(",");
-        if (getNextToken() != null)
-            sb.append("NextToken: ").append(getNextToken()).append(",");
-        if (getLimit() != null)
-            sb.append("Limit: ").append(getLimit());
-        sb.append("}");
-        return sb.toString();
+    	
+    	JsonObject modelJson = Json.object();
+		if(logGroupNamePrefix !=null)
+			modelJson.set("logGroupNamePrefix", this.logGroupNamePrefix);
+		if(nextToken !=null)
+			modelJson.set("nextToken", this.nextToken);
+		if(limit !=null)
+			modelJson.set("limit", this.limit);
+				
+		return modelJson.toString();
+       
     }
 
     @Override

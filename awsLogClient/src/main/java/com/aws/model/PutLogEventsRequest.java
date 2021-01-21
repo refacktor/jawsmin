@@ -4,6 +4,11 @@ package com.aws.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
+
+
 /**
  * 
  * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/PutLogEvents" target="_top">AWS API
@@ -292,18 +297,24 @@ public class PutLogEventsRequest  implements Serializable, Cloneable {
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{");
-        if (getLogGroupName() != null)
-            sb.append("LogGroupName: ").append(getLogGroupName()).append(",");
-        if (getLogStreamName() != null)
-            sb.append("LogStreamName: ").append(getLogStreamName()).append(",");
-        if (getLogEvents() != null)
-            sb.append("LogEvents: ").append(getLogEvents()).append(",");
-        if (getSequenceToken() != null)
-            sb.append("SequenceToken: ").append(getSequenceToken());
-        sb.append("}");
-        return sb.toString();
+    	JsonObject modelJson = Json.object();
+		if(logGroupName !=null)
+			modelJson.set("logGroupName", this.logGroupName);
+		if(logStreamName !=null)
+			modelJson.set("logStreamName", this.logStreamName);
+		if(logEvents !=null) {
+			JsonArray logs= null;
+			for(InputLogEvent logEvent : logEvents) {
+				logs= Json.array().add(logEvent.toString());
+			}
+				
+				modelJson.set("logEvents", logs);
+			
+		}
+			
+		return modelJson.toString();
+
+      
     }
 
     @Override

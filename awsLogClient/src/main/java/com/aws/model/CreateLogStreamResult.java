@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/CreateLogStream" target="_top">AWS API
  *      Documentation</a>
  */
-public class CreateLogStreamResult  implements Serializable, Cloneable {
+public class CreateLogStreamResult  extends JsonMapperModel implements Serializable, Cloneable {
 
     /**
      * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
@@ -55,5 +55,11 @@ public class CreateLogStreamResult  implements Serializable, Cloneable {
             throw new IllegalStateException("Got a CloneNotSupportedException from Object.clone() " + "even though we're Cloneable!", e);
         }
     }
+
+	@Override
+	public JsonMapperModel toModel(String json) {
+		// TODO Auto-generated method stub
+		return new CreateLogStreamResult();
+	}
 
 }

@@ -1,6 +1,7 @@
 package com.aws.logs;
 
-import org.apache.http.client.methods.HttpPost;
+import java.io.IOException;
+import java.net.HttpURLConnection;
 
 import com.aws.model.CreateLogGroupRequest;
 import com.aws.model.CreateLogGroupResult;
@@ -18,39 +19,79 @@ import com.aws.util.HttpUtils;
 public class AWSLogsClient implements AWSLogs {
 
 	public PutLogEventsResult putLogEvents(PutLogEventsRequest request) {
-		HttpPost post = HttpUtils.createRequest(Constants.URL+"/?Action=PutLogEvents&Version=2012-10-17",
-				Constants.SERVICE + "." + Constants.REGION + "."+Constants.DOMAIN, Constants.KEY, Constants.SECRET, Constants.REGION, Constants.SERVICE,
-				"POST","/", "PutLogEvents",request);
-		return HttpUtils.executeRequest(post, request, PutLogEventsResult.class);
+		HttpURLConnection post;
+		try {
+			post = HttpUtils.createRequest(Constants.URL+"/?Action=PutLogEvents&Version=2012-10-17",
+					Constants.SERVICE + "." + Constants.REGION + "."+Constants.DOMAIN, Constants.KEY, Constants.SECRET, Constants.REGION, Constants.SERVICE,
+					"POST","/", "PutLogEvents",request);
+			return (PutLogEventsResult) HttpUtils.executeRequest(post, request,new PutLogEventsResult());
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public CreateLogGroupResult createLogGroup(CreateLogGroupRequest request) {
-		HttpPost post = HttpUtils.createRequest(Constants.URL+"/?Action=CreateLogGroup&Version=2012-10-17",
-				Constants.SERVICE + "." + Constants.REGION +  "."+Constants.DOMAIN, Constants.KEY, Constants.SECRET, Constants.REGION, Constants.SERVICE,
-				"POST", "/","CreateLogGroup",request);
-		return HttpUtils.executeRequest(post, request, CreateLogGroupResult.class);
+		HttpURLConnection post;
+		try {
+			post = HttpUtils.createRequest(Constants.URL+"/?Action=CreateLogGroup&Version=2012-10-17",
+					Constants.SERVICE + "." + Constants.REGION +  "."+Constants.DOMAIN, Constants.KEY, Constants.SECRET, Constants.REGION, Constants.SERVICE,
+					"POST", "/","CreateLogGroup",request);
+			return (CreateLogGroupResult) HttpUtils.executeRequest(post, request,new CreateLogGroupResult());
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public DescribeLogGroupsResult describeLogGroups(DescribeLogGroupsRequest request) {
 		// request = beforeClientExecution(request);
-		HttpPost post = HttpUtils.createRequest(Constants.URL+"/?Action=DescribeLogGroups&Version=2012-10-17",
-				Constants.SERVICE + "." + Constants.REGION +  "."+Constants.DOMAIN, Constants.KEY, Constants.SECRET, Constants.REGION, Constants.SERVICE,
-				"POST","/", "DescribeLogGroups",request);
-		return HttpUtils.executeRequest(post, request, DescribeLogGroupsResult.class);
+		HttpURLConnection post;
+		try {
+			post = HttpUtils.createRequest(Constants.URL+"/?Action=DescribeLogGroups&Version=2012-10-17",
+					Constants.SERVICE + "." + Constants.REGION +  "."+Constants.DOMAIN, Constants.KEY, Constants.SECRET, Constants.REGION, Constants.SERVICE,
+					"POST","/", "DescribeLogGroups",request);
+			return (DescribeLogGroupsResult) HttpUtils.executeRequest(post, request,new DescribeLogGroupsResult());
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public CreateLogStreamResult createLogStream(CreateLogStreamRequest request) {
-		HttpPost post = HttpUtils.createRequest(Constants.URL+"/?Action=CreateLogStream&Version=2012-10-17",
-				Constants.SERVICE + "." + Constants.REGION +  "."+Constants.DOMAIN, Constants.KEY, Constants.SECRET, Constants.REGION, Constants.SERVICE,
-				"POST", "/","CreateLogStream",request);
-		return HttpUtils.executeRequest(post, request, CreateLogStreamResult.class);
+		HttpURLConnection post;
+		try {
+			post = HttpUtils.createRequest(Constants.URL+"/?Action=CreateLogStream&Version=2012-10-17",
+					Constants.SERVICE + "." + Constants.REGION +  "."+Constants.DOMAIN, Constants.KEY, Constants.SECRET, Constants.REGION, Constants.SERVICE,
+					"POST", "/","CreateLogStream",request);
+			return (CreateLogStreamResult) HttpUtils.executeRequest(post, request,new CreateLogStreamResult());
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public DescribeLogStreamsResult describeLogStreams(DescribeLogStreamsRequest request) {
-		HttpPost post = HttpUtils.createRequest(Constants.URL+"/?Action=DescribeLogStreams&Version=2012-10-17",
-				Constants.SERVICE + "." + Constants.REGION +  "."+Constants.DOMAIN, Constants.KEY, Constants.SECRET, Constants.REGION, Constants.SERVICE,
-				"POST","/", "DescribeLogStreams",request);
-		return HttpUtils.executeRequest(post, request, DescribeLogStreamsResult.class);
+		HttpURLConnection post;
+		try {
+			post = HttpUtils.createRequest(Constants.URL+"/?Action=DescribeLogStreams&Version=2012-10-17",
+					Constants.SERVICE + "." + Constants.REGION +  "."+Constants.DOMAIN, Constants.KEY, Constants.SECRET, Constants.REGION, Constants.SERVICE,
+					"POST","/", "DescribeLogStreams",request);
+			return (DescribeLogStreamsResult) HttpUtils.executeRequest(post, request,new DescribeLogStreamsResult());
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

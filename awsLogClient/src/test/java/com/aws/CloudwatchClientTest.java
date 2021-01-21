@@ -1,25 +1,32 @@
 package com.aws;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.Test;
 
 import com.aws.logs.AWSLogsClient;
 import com.aws.model.CreateLogGroupRequest;
+import com.aws.model.CreateLogStreamRequest;
+import com.aws.model.DescribeLogStreamsRequest;
 
 
 public class CloudwatchClientTest {
 
     @Test
     public void test() {
-        CreateLogGroupRequest g = new CreateLogGroupRequest();
-        // g.setKmsKeyId("kms");
-        g.setLogGroupName("logG1");
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("test", "test");
-        g.setTags(map);
-        AWSLogsClient log = new AWSLogsClient();
-        log.createLogGroup(g);
+		AWSLogsClient log  = new AWSLogsClient();
+
+    	
+		CreateLogStreamRequest logStream = new CreateLogStreamRequest();
+		logStream.setLogGroupName("test65");
+		logStream.setLogStreamName("S1");
+		log.createLogStream(logStream);
+		DescribeLogStreamsRequest describe = new DescribeLogStreamsRequest();
+		describe.setLogGroupName("GroupLo44");
+		
+		log.describeLogStreams(describe);
+		
+		CreateLogGroupRequest g = new CreateLogGroupRequest();
+		g.setLogGroupName("test2");
+		
+		log.createLogGroup(g);
     }
 }

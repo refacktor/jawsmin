@@ -38,6 +38,7 @@ public class AWSV4Auth {
         private TreeMap<String, String> queryParametes;
         private TreeMap<String, String> awsHeaders;
         private String payload;
+        private String date;
         private boolean debug = false;
 
         public Builder(String accessKeyID, String secretAccessKey) {
@@ -79,11 +80,16 @@ public class AWSV4Auth {
             this.payload = payload;
             return this;
         }
-
-        public Builder debug() {
-            this.debug = true;
+        public Builder date(String date) {
+            this.date = date;
             return this;
         }
+
+        public Builder debug(boolean debug) {
+            this.debug = debug;
+            return this;
+        }
+        
 
         public AWSV4Auth build() {
             return new AWSV4Auth(this);
@@ -118,10 +124,10 @@ public class AWSV4Auth {
         queryParametes = builder.queryParametes;
         awsHeaders = builder.awsHeaders;
         payload = builder.payload;
+        xAmzDate=builder.date;
         debug = builder.debug;
 
         /* Get current timestamp value.(UTC) */
-        xAmzDate = getTimeStamp();
         currentDate = getDate();
     }
 
@@ -258,7 +264,6 @@ public static void main(String[] args) {
 
         /* Execute Task 2: Create a String to Sign for Signature Version 4. */
         String stringToSign = prepareStringToSign(canonicalURL);
-System.out.println("test");
         /* Execute Task 3: Calculate the AWS Signature Version 4. */
         String signature = calculateSignature(stringToSign);
 
@@ -268,9 +273,11 @@ System.out.println("test");
           
             header.put("Authorization", buildAuthorizationString(signature));
 
-            header.put("content-type", awsHeaders.get("content-type"));
             header.put("host", awsHeaders.get("host"));       
-            header.put("x-amz-date", getTimeStamp());   
+            header.put("x-amz-date", awsHeaders.get("x-amz-date"));   
+            header.put("x-amz-target", awsHeaders.get("x-amz-target"));
+            header.put("content-type", awsHeaders.get("content-type"));
+ 
             if (debug) {
                 System.out.println("##Signature:\n" + signature);
                 System.out.println("##Header:");
