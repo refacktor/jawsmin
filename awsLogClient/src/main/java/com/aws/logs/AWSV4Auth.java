@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.TreeMap;
+import java.util.logging.Logger;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -23,6 +24,8 @@ import javax.crypto.spec.SecretKeySpec;
  * @Github: https://github.com/javaquery/Examples
  */
 public class AWSV4Auth {
+	
+	final private static Logger logger = Logger.getLogger(AWSV4Auth.class.getName());
 
 	private AWSV4Auth() {
 	}
@@ -213,7 +216,7 @@ public class AWSV4Auth {
 		canonicalURL.append(generateHex(payload));
 
 		if (debug) {
-			System.out.println(
+			logger.info(
 					"##Canonical Request:\n" + canonicalURL.toString());
 		}
 
@@ -255,7 +258,7 @@ public class AWSV4Auth {
 		stringToSign += generateHex(canonicalURL);
 
 		if (debug) {
-			System.out.println("##String to sign:\n" + stringToSign);
+			logger.info("##String to sign:\n" + stringToSign);
 		}
 
 		return stringToSign;
@@ -319,18 +322,18 @@ public class AWSV4Auth {
 			header.put("content-type", awsHeaders.get("content-type"));
 
 			if (debug) {
-				System.out.println("##Signature:\n" + signature);
-				System.out.println("##Header:");
+				logger.info("##Signature:\n" + signature);
+				logger.info("##Header:");
 				for (Map.Entry<String, String> entrySet : header.entrySet()) {
-					System.out.println(
+					logger.info(
 							entrySet.getKey() + " = " + entrySet.getValue());
 				}
-				System.out.println("================================");
+				logger.info("================================");
 			}
 			return header;
 		} else {
 			if (debug) {
-				System.out.println("##Signature:\n" + signature);
+				logger.info("##Signature:\n" + signature);
 			}
 			return null;
 		}

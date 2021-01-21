@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.TreeMap;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -20,6 +21,8 @@ import com.aws.logs.AWSV4Auth;
 import com.aws.model.JsonMapperModel;
 
 public class HttpUtils {
+	
+	final private static Logger logger = Logger.getLogger(HttpUtils.class.getName());
 
 	private static String getTimeStamp() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'");
@@ -43,7 +46,7 @@ public class HttpUtils {
 		 */
 
 		String xAmzDate = getTimeStamp();
-		System.out.println(xAmzDate);
+		logger.info(xAmzDate);
 		TreeMap<String, String> awsHeaders = new TreeMap<String, String>();
 		awsHeaders.put("host", host);
 		awsHeaders.put("x-amz-date", xAmzDate);
@@ -55,7 +58,7 @@ public class HttpUtils {
 		queryParam.put("Action", action);
 		queryParam.put("Version", "2012-10-17");
 
-		System.out.println(payload.toString());
+		logger.info(payload.toString());
 
 		AWSV4Auth aWSV4Auth = new AWSV4Auth.Builder(key, secret)
 				.regionName(region).serviceName(service) // es - elastic
@@ -73,7 +76,7 @@ public class HttpUtils {
 				.debug(false) // turn on the debug mode
 				.build();
 		aWSV4Auth.getHeaders();
-		System.out.println(
+		logger.info(
 				"######################################################################");
 		/* Get header calculated for request */
 		Map<String, String> header = new TreeMap<String, String>(
@@ -101,7 +104,7 @@ public class HttpUtils {
 		try {
 
 			String inputString = user.toString();
-			System.out.println(inputString);
+			logger.info(inputString);
 			request.setDoOutput(true);
 
 			try (OutputStream os = request.getOutputStream()) {
@@ -111,7 +114,7 @@ public class HttpUtils {
 			}
 
 			int responseCode = request.getResponseCode();
-			System.out.println("POST Response Code :: " + responseCode);
+			logger.info("POST Response Code :: " + responseCode);
 
 			if (responseCode == HttpURLConnection.HTTP_OK) { // success
 				BufferedReader in = new BufferedReader(
@@ -125,11 +128,11 @@ public class HttpUtils {
 				in.close();
 
 				// print result
-				System.out.println(response.toString());
+				logger.info(response.toString());
 				return model.toModel(response.toString());
 
 			} else {
-				System.out.println("POST request not worked");
+				logger.info("POST request not worked");
 				BufferedReader in = new BufferedReader(
 						new InputStreamReader(request.getErrorStream()));
 				String inputLine;

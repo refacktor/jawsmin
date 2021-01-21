@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import com.aws.logs.AWSLogsClient;
@@ -27,21 +28,9 @@ import com.aws.model.LogStream;
 import com.aws.model.PutLogEventsRequest;
 import com.aws.model.PutLogEventsResult;
 
-//import com.amazonaws.regions.DefaultAwsRegionProviderChain;
-//import com.amazonaws.services.logs.AWSLogs;
-//import com.amazonaws.services.logs.AWSLogsClientBuilder;
-//import com.amazonaws.services.logs.model.CreateLogGroupRequest;
-//import com.amazonaws.services.logs.model.CreateLogStreamRequest;
-//import com.amazonaws.services.logs.model.DescribeLogGroupsRequest;
-//import com.amazonaws.services.logs.model.DescribeLogStreamsRequest;
-//import com.amazonaws.services.logs.model.InputLogEvent;
-//import com.amazonaws.services.logs.model.InvalidSequenceTokenException;
-//import com.amazonaws.services.logs.model.LogGroup;
-//import com.amazonaws.services.logs.model.LogStream;
-//import com.amazonaws.services.logs.model.PutLogEventsRequest;
-//import com.amazonaws.services.logs.model.PutLogEventsResult;
-
 public class CloudwatchClient {
+
+	final private static Logger logger = Logger.getLogger(CloudwatchClient.class.getName());
 
 	protected static CloudwatchClient instance;
 
@@ -211,7 +200,7 @@ public class CloudwatchClient {
 						.equals(logStreamName))
 				.findFirst();
 		if (!logStreamOptional.isPresent()) {
-			System.out.println("About to create LogStream: " + logStreamName
+			logger.info("About to create LogStream: " + logStreamName
 					+ " in LogGroup: " + logGroupName);
 			CreateLogStreamRequest createLogStreamRequest = new CreateLogStreamRequest()
 					.withLogGroupName(logGroupName)
